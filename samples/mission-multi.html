@@ -1,0 +1,606 @@
+<html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mission 7 — Real Ways to Earn With AI · sqills</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=DM+Mono:wght@500&amp;display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #E85D04;
+    --orange-light: #FF8C42;
+    --bg: #F5F0E8;
+    --card-bg: #FFFFFF;
+    --dark: #1A1A1A;
+    --mid: #5C5C5C;
+    --light: #9A9A8A;
+    --border: #E0D9CC;
+    --tag-info: #E8F4F0;
+    --tag-info-text: #2A7A5A;
+    --tag-opinion: #FFF3E0;
+    --tag-opinion-text: #B45309;
+    --tag-knowledge: #EEF2FF;
+    --tag-knowledge-text: #3730A3;
+    --tag-aibox: #FDF2F8;
+    --tag-aibox-text: #9D174D;
+    --tag-congrats: #1A1A1A;
+    --tag-congrats-text: #E85D04;
+    --radius: 16px;
+    --radius-sm: 10px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--dark); min-height: 100vh; }
+
+  /* TOP NAV */
+  .top-nav { background: var(--dark); padding: 16px 32px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+  .logo { font-family: 'DM Mono', monospace; color: var(--orange); font-size: 18px; font-weight: 500; letter-spacing: 0.04em; }
+  .mission-label { color: #888; font-size: 13px; font-weight: 500; }
+
+  /* LAYOUT */
+  .container { max-width: 1400px; margin: 0 auto; padding: 40px 24px 80px; }
+  .mission-header { margin-bottom: 40px; }
+  .mission-tag { display: inline-block; font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500; color: var(--orange); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 10px; }
+  .mission-title { font-size: 32px; font-weight: 700; color: var(--dark); line-height: 1.15; margin-bottom: 8px; }
+  .mission-meta { color: var(--mid); font-size: 14px; }
+
+  /* LESSON */
+  .lesson { margin-bottom: 48px; }
+  .lesson-header { display: flex; align-items: baseline; gap: 14px; margin-bottom: 20px; padding-bottom: 14px; border-bottom: 2px solid var(--border); }
+  .lesson-number { font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500; color: var(--light); letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap; }
+  .lesson-title { font-size: 20px; font-weight: 700; color: var(--dark); }
+  .lesson-meta { margin-left: auto; font-size: 12px; color: var(--light); white-space: nowrap; }
+
+  /* GRID */
+  .screens-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px; }
+
+  /* SCREEN CARD */
+  .screen-card { background: var(--card-bg); border-radius: var(--radius); border: 1.5px solid var(--border); overflow: hidden; display: flex; flex-direction: column; transition: box-shadow 0.15s ease, opacity 0.2s ease; position: relative; }
+  .screen-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+  .screen-card.dragging { opacity: 0.5; }
+  .screen-card.drag-over { border-color: var(--orange); background-color: #FFFAF4; }
+
+  /* PHONE CHROME */
+  .phone-chrome { background: var(--dark); height: 24px; display: flex; flex-direction: column; }
+  .chrome-bar { display: flex; align-items: center; justify-content: space-between; padding: 4px 8px; color: var(--light); font-size: 10px; flex: 1; }
+  .chrome-back { cursor: pointer; color: var(--orange); font-size: 12px; }
+  .chrome-progress { flex: 1; height: 2px; background: rgba(255,255,255,0.1); margin: 0 6px; border-radius: 1px; overflow: hidden; }
+  .chrome-progress-fill { height: 100%; background: var(--orange); width: 0%; }
+  .chrome-close { cursor: pointer; color: var(--orange); font-size: 12px; font-weight: bold; }
+
+  /* SCREEN CONTENT */
+  .screen-content { padding: 20px; flex: 1; display: flex; flex-direction: column; gap: 12px; }
+  .screen-number { font-family: 'DM Mono', monospace; font-size: 9px; font-weight: 500; color: var(--light); letter-spacing: 0.1em; text-transform: uppercase; }
+  .screen-type-tag { display: inline-block; font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 600; padding: 4px 6px; border-radius: 4px; width: fit-content; }
+  .tag-info { background: var(--tag-info); color: var(--tag-info-text); }
+  .tag-opinion { background: var(--tag-opinion); color: var(--tag-opinion-text); }
+  .tag-knowledge { background: var(--tag-knowledge); color: var(--tag-knowledge-text); }
+  .tag-aibox { background: var(--tag-aibox); color: var(--tag-aibox-text); }
+  .tag-congrats { background: var(--tag-congrats); color: var(--tag-congrats-text); }
+
+  /* HEADING BLOCK */
+  .heading-block { }
+  .screen-heading { font-size: 16px; font-weight: 700; color: var(--dark); margin-bottom: 4px; line-height: 1.3; }
+  .screen-subheading { font-size: 13px; color: var(--mid); margin-bottom: 8px; }
+
+  /* SCREEN BODY */
+  .screen-body { font-size: 13px; line-height: 1.5; color: var(--mid); }
+  .screen-body p { margin-bottom: 12px; }
+  .screen-body p:last-child { margin-bottom: 0; }
+  .screen-body strong { color: var(--dark); font-weight: 600; }
+
+  /* OPTIONS LIST */
+  .options-list { display: flex; flex-direction: column; gap: 10px; }
+  .option-tile { display: flex; align-items: flex-start; gap: 10px; padding: 12px; border: 1.5px solid var(--border); border-radius: 8px; cursor: pointer; transition: all 0.15s ease; }
+  .option-tile:hover { border-color: var(--orange); background: rgba(232,93,4,0.03); }
+  .option-tile span { font-size: 13px; color: var(--dark); line-height: 1.4; flex: 1; }
+  .option-radio { width: 16px; height: 16px; border: 2px solid var(--border); border-radius: 50%; flex-shrink: 0; margin-top: 2px; }
+  .option-tile:hover .option-radio { border-color: var(--orange); }
+
+  /* MCQ TILES */
+  .mcq-tiles { display: flex; flex-direction: column; gap: 10px; }
+  .mcq-tile { display: flex; align-items: center; gap: 12px; padding: 12px; border: 1.5px solid var(--border); border-radius: 8px; cursor: pointer; transition: all 0.15s ease; }
+  .mcq-tile:hover { border-color: var(--orange); background: rgba(232,93,4,0.03); }
+  .mcq-tile span { font-size: 13px; color: var(--dark); flex: 1; }
+  .mcq-radio { width: 16px; height: 16px; border: 2px solid var(--border); border-radius: 50%; }
+  .mcq-tile:hover .mcq-radio { border-color: var(--orange); }
+
+  /* EXPLANATION BLOCK */
+  .explanation-block { background: rgba(232,93,4,0.08); border-left: 3px solid var(--orange); padding: 12px; border-radius: 6px; font-size: 12px; line-height: 1.5; color: var(--dark); }
+  .explanation-block strong { color: var(--dark); font-weight: 600; }
+
+  /* CONGRATS CARD */
+  .congrats-card { background: var(--dark); color: var(--orange); padding: 24px; text-align: center; }
+  .congrats-eyebrow { font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500; letter-spacing: 0.08em; margin-bottom: 12px; opacity: 0.8; }
+  .congrats-statement { font-size: 18px; font-weight: 600; line-height: 1.4; }
+  .stars-row { text-align: center; padding: 16px 0; font-size: 20px; letter-spacing: 4px; color: var(--orange); }
+  .continue-btn { text-align: center; padding: 12px; font-size: 14px; color: var(--orange); font-weight: 600; cursor: pointer; border-top: 1.5px solid var(--border); }
+
+  /* MISSION BRIEF BOX */
+  .mission-brief-box { background: #E8E0FF; border-left: 4px solid #5B52B5; padding: 16px; border-radius: 8px; margin-bottom: 20px; }
+  .mission-brief-box strong { color: #5B52B5; }
+</style>
+</head>
+<body>
+
+<div class="top-nav">
+  <span class="logo">sqills</span>
+  <span class="mission-label">Mission 7</span>
+</div>
+
+<div class="container">
+
+  <div class="mission-header">
+    <span class="mission-tag">Mission 7</span>
+    <h1 class="mission-title">Real Ways to Earn With AI</h1>
+    <p class="mission-meta">Four lessons, ~10 minutes each</p>
+  </div>
+
+  <div class="mission-brief-box">
+    <strong>📺 Mission brief (~25 sec).</strong> Most videos about earning with AI teach the path that worked for the speaker. There are actually four — and you can't do all of them at once. By the end of this mission you'll have the full map, including the one no course pays the writer to recommend, plus the four questions you'll keep asking yourself through everything that comes next. Let's read the map.
+  </div>
+
+  <!-- LESSON 7.1 -->
+  <div class="lesson">
+    <div class="lesson-header">
+      <span class="lesson-number">Lesson 7.1</span>
+      <span class="lesson-title">The Map</span>
+      <span class="lesson-meta">5 screens</span>
+    </div>
+    <div class="screens-grid">
+
+      <!-- L7.1 S1 — VIDEO SCRIPT: The Map -->
+      <div class="screen-card">
+        <div class="phone-chrome"><div class="chrome-bar"><div class="chrome-back">‹</div><div class="chrome-progress"><div class="chrome-progress-fill" style="width:20%"></div></div><div class="chrome-close">×</div></div></div>
+        <div class="screen-content">
+          <div class="screen-number">L7.1 · 1 of 5</div>
+          <span class="screen-type-tag tag-info">Video Script</span>
+          <div class="heading-block">
+            <div class="screen-heading">You've seen the videos. I made $47,000 in 90 days with AI. The laziest way to get rich with ChatGPT.</div>
+          </div>
+          <div class="screen-body">Watch enough of them and a pattern shows up. The marketing-agency person tells you to start a marketing agency. The course-seller tells you to sell courses. The print-on-demand creator tells you to start a print-on-demand store. Every single one is pitching the path that already worked for them.
+
+That's not malicious. It's predictable. Most content about earning with AI is written by people who've found one path and need that path to stay crowded enough to feel real.</div>
+          <div class="continue-btn">Continue →</div>
+        </div>
+      </div>
+
+      <!-- L7.1 S2 — INFO: Underneath the Noise, Four Shapes -->
+      <div class="screen-card">
+        <div class="phone-chrome"><div class="chrome-bar"><div class="chrome-back">‹</div><div class="chrome-progress"><div class="chrome-progress-fill" style="width:40%"></div></div><div class="chrome-close">×</div></div></div>
+        <div class="screen-content">
+          <div class="screen-number">L7.1 · 2 of 5</div>
+          <span class="screen-type-tag tag-info">Info</span>
+          <div class="heading-block">
+            <div class="screen-heading">Four shapes of income</div>
+          </div>
+          <div class="screen-body"><strong>The first is AI Services.</strong> You sell AI-powered work to businesses that don't want to do it themselves. You're the AI person they hire. First dollar in weeks; capped by your time.
+
+<strong>The second is AI Products.</strong> You build something once — digital or physical — and sell it through marketplaces where buyers already are. Most attempts make nothing. One hit can pay for everything. First dollar in months; ceiling depends on what hits.
+
+<strong>The third is AI Content.</strong> You build an audience that pays you — through ads, affiliates, eventually your own products. Slowest fuse, largest ceiling. First dollar typically several months out.
+
+<strong>The fourth is The Force Multiplier.</strong> You use AI to multiply your own output in your current role. Your value to the team rises while your peers' stays flat. Salary follows. First dollar comes back in your next pay cycle, in the form of opportunity. Ceiling sits at your role's salary band — but the path costs nothing and risks nothing.
+
+That's the map. Four shapes. Everything you've seen on YouTube, TikTok, or LinkedIn slots into one of them.</div>
+          <div class="continue-btn">Continue →</div>
+        </div>
+      </div>
+
+      <!-- L7.1 S3 — INFO: Why This Isn't a Quiz -->
+      <div class="screen-card">
+        <div class="phone-chrome"><div class="chrome-bar"><div class="chrome-back">‹</div><div class="chrome-progress"><div class="chrome-progress-fill" style="width:60%"></div></div><div class="chrome-close">×</div></div></div>
+        <div class="screen-content">
+          <div class="screen-number">L7.1 · 3 of 5</div>
+          <span class="screen-type-tag tag-info">Info</span>
+          <div class="heading-block">
+            <div class="screen-heading">You might be tempted to pick now. Don't.</div>
+          </div>
+          <div class="screen-body">The right path for you isn't going to be obvious from a 10-minute lesson. It's going to be obvious after you've done a few Builder missions — produced real work, felt what the work felt like, noticed which kind of output you were proud of and which kind drained you. That's the data. This mission is just the map.
+
+So here's what comes next. The next two lessons walk the four paths in pairs — Services and Products together, then Content and the Force Multiplier. The fourth and final lesson hands you a tool: four questions to keep asking yourself as you do the rest of the Challenge. By the time the Challenge ends, those questions will have answered themselves.</div>
+          <div class="continue-btn">Continue →</div>
+        </div>
+      </div>
+
+      <!-- L7.1 S4 — KNOWLEDGE: Scenario Q1 -->
+      <div class="screen-card">
+        <div class="phone-chrome"><div class="chrome-bar"><div class="chrome-back">‹</div><div class="chrome-progress"><div class="chrome-progress-fill" style="width:80%"></div></div><div class="chrome-close">×</div></div></div>
+        <div class="screen-content">
+          <div class="screen-number">L7.1 · 4 of 5</div>
+          <span class="screen-type-tag tag-knowledge">Knowledge Check</span>
+          <div class="heading-block">
+            <div class="screen-heading">Which path fits her best?</div>
+            <div class="screen-subheading">Elena: physiotherapist, 6 years in, runs a small clinic, loves teaching. Zero programming background. Doesn't want to leave her career. Has maybe an hour a day.</div>
+          </div>
+          <div class="mcq-tiles">
+            <div class="mcq-tile">
+              <div class="mcq-radio"></div>
+              <span><strong>A.</strong> AI Services — productize expertise into AI-powered audits</span>
+            </div>
+            <div class="mcq-tile">
+              <div class="mcq-radio"></div>
+              <span><strong>B.</strong> AI Products — build AI-assisted digital course for runners</span>
+            </div>
+            <div class="mcq-tile">
+              <div class="mcq-radio"></div>
+              <span><strong>C.</strong> AI Content — start faceless YouTube about evidence-based physio</span>
+            </div>
+            <div class="mcq-tile">
+              <div class="mcq-radio"></div>
+              <span><strong>D.</strong> Force Multiplier — improve clinic operations and workshops with AI</span>
+            </div>
+          </div>
+          <div class="explanation-block"><strong>Correct: D.</strong> All four are real options. A adds a second business to an already-full week. B mismatches her stated preference for contact-based work. C requires 6+ months without immediate feedback, not her stated motivation. D wins because every constraint Elena described points the same direction: limited time, current career she doesn't want to leave, existing infrastructure that AI can amplify directly.</div>
+          <div class="continue-btn">Continue →</div>
+        </div>
+      </div>
+
+      <!-- L7.1 S5 — CLOSING -->
+      <div class="screen-card">
+        <div class="phone-chrome"><div class="chrome-bar"><div class="chrome-back">‹</div><div class="chrome-progress"><div class="chrome-progress-fill" style="width:100%"></div></div><div class="chrome-close">×</div></div></div>
+        <div class="screen-content">
+          <div class="screen-number">L7.1 · 5 of 5</div>
+          <span class="screen-type-tag tag-info">Info</span>
+          <div class="heading-block">
+            <div class="screen-heading">Most "make money with AI" content is sales pitches dressed as advice</div>
+          </div>
+          <div class="screen-body">The map is simpler than the noise: four shapes, four trade-offs, one decision you'll make later. Next: the two business shapes — what you build, who pays for it, and which one matches the kind of risk you can actually afford.</div>
+          <div class="continue-btn">Continue →</div>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /L7.1 -->
+
+  <!-- LESSON 7.2 -->
+  <div class="lesson">
+    <div class="lesson-header">
+      <span class="lesson-number">Lesson 7.2</span>
+      <span class="lesson-title">Services & Products</span>
+      <span class="lesson-meta">5 screens</span>
+    </div>
+    <div class="screens-grid">
+
+      <!-- L7.2 S1 — VIDEO SCRIPT -->
+      <div class="screen-card">
+        <div class="phone-chrome"><div class="chrome-bar"><div class="chrome-back">‹</div><div class="chrome-progress"><div class="chrome-progress-fill" style="width:20%"></div></div><div class="chrome-close">×</div></div></div>
+        <div class="screen-content">
+          <div class="screen-number">L7.2 · 1 of 5</div>
+          <span class="screen-type-tag tag-info">Video Script</span>
+          <div class="heading-block">
+            <div class="screen-heading">There are two ways to make money with AI that look like a business. In both, you build something and someone pays you for it. The difference is who pays, and when.</div>
+          </div>
+          <div class="screen-body">Services and Products trade off on two axes: time-to-first-dollar and the shape of the ceiling.
+
+Services pays fast and caps your income at your hours. You'll know within weeks whether the path is working. The downside is structural — you scale by working more.
+
+Products pays slow and has no ceiling. Most attempts return zero; a few return ten times what you put in. The bet is that one will hit.</div>
+          <div class="continue-btn">Continue →</div>
+        </div>
+      </div>
+
+      <!-- L7.2 S2 — INFO: Services — Fast Cash, Capped Scale -->
+      <div class="screen-card">
+        <div class="phone-chrome"><div class="chrome-bar"><div class="chrome-back">‹</div><div class="chrome-progress"><div class="chrome-progress-fill" style="width:40%"></div></div><div class="chrome-close">×</div></div></div>
+        <div class="screen-content">
+          <div class="screen-number">L7.2 · 2 of 5</div>
+          <span class="screen-type-tag tag-info">Info</span>
+          <div class="heading-block">
+            <div class="screen-heading">Services — fast cash, capped scale</div>
+          </div>
+          <div class="screen-body">In the Services shape, businesses pay you to do AI-powered work for them. You become the AI person they don't want to be themselves. The work can be almost anything: building an automation, designing an AI voice agent, running a Tools Audit, training staff, generating a month of social content.
+
+Published case studies describe Tools Audit engagements running four weeks for $60,000. Day-rate ceilings sit between $200 and $2,500.
+
+<strong>The audit-to-deal pattern:</strong> Pick a niche. Find a few real businesses in it. Spend an hour using AI to identify three to five things they could be doing better with AI. Record a 60-second Loom video walking them through it. Send the video. Ask if they'd like you to fix it.
+
+You give before you ask. The audit becomes the sales pitch. Services is the path with the fastest feedback loop — your first paying client is two to six weeks away if you grind. It's also the path with the strictest ceiling. Income scales with hours; hours have a hard limit.</div>
+          <div class="continue-btn">Continue →</div>
+        </div>
+      </div>
+
+      <!-- L7.2 S3 — INFO: Products — Slow Cash, Asymmetric Upside -->
+      <div class="screen-card">
+        <div class="phone-chrome"><div class="chrome-bar"><div class="chrome-back">‹</div><div class="chrome-progress"><div class="chrome-progress-fill" style="width:60%"></div></div><div class="chrome-close">×</div></div></div>
+        <div class="screen-content">
+          <div class="screen-number">L7.2 · 3 of 5</div>
+          <span class="screen-type-tag tag-info">Info</span>
+          <div class="heading-block">
+            <div class="screen-heading">Products — slow cash, asymmetric upside</div>
+          </div>
+          <div class="screen-body">In the Products shape, you build something once — digital or physical — and sell it through a marketplace where buyers already are. You don't chase clients. The product sits and waits. When it sells, you get paid; when it doesn't, you don't.
+
+Think of it as an unlimited slot machine — most products make zero copies, but the cost of those failures is near zero. Pull the lever a hundred times for free. One hit can change your finances. The ones that stay live keep paying long after you stop touching them.
+
+<strong>Forms vary:</strong> Some sell digital info products on Whop or Gumroad. Others build print-on-demand stores: design t-shirts using AI, list them on Etsy, the print shop fulfils orders, keep the margin. Both share the same economics — most listings make nothing; the ones that hit pay for the misses many times over.</div>
+          <div class="continue-btn">Continue →</div>
+        </div>
+      </div>
+
+      <!-- L7.2 S4 — KNOWLEDGE: Scenario Q2 -->
+      <div class="screen-card">
+        <div class="phone-chrome"><div class="chrome-bar"><div class="chrome-back">‹</div><div class="chrome-progress"><div class="chrome-progress-fill" style="width:80%"></div></div><div class="chrome-close">×</div></div></div>
+        <div class="screen-content">
+          <div class="screen-number">L7.2 · 4 of 5</div>
+          <span class="screen-type-tag tag-knowledge">Knowledge Check</span>
+          <div class="heading-block">
+            <div class="screen-heading">What's the accurate diagnosis?</div>
+            <div class="screen-subheading">Marco spent 80 hours on AI digital products over 6 months. He made $40. He's about to give up: "AI digital products are a scam."</div>
+          </div>
+          <div class="mcq-tiles">
+            <div class="mcq-tile">
+              <div class="mcq-radio"></div>
+              <span><strong>A.</strong> He's focused too narrowly on one category — diversify across multiple niches</span>
+            </div>
+            <div class="mcq-tile">
+              <div class="mcq-radio"></div>
+              <span><strong>B.</strong> He picked wrong for his tolerance — switch to Services for faster feedback</span>
+            </div>
+            <div class="mcq-tile">
+              <div class="mcq-radio"></div>
+              <span><strong>C.</strong> He hasn't built enough products — 80 hours/6 months is too small a sample size</span>
+            </div>
+            <div class="mcq-tile">
+              <div class="mcq-radio"></div>
+              <span><strong>D.</strong> He's using wrong tools — specialist tools would have changed the outcome</span>
+            </div>
+          </div>
+          <div class="explanation-block"><strong>Correct: C.</strong> Products explicitly trades early certainty for asymmetric upside — the model only works if you keep pulling the lever past where most people give up. Marco's described volume is genuinely too small a sample. The lesson warned this would happen. B is almost right — switching is legitimate — but Marco hasn't given Products a real chance yet.</div>
+          <div class="continue-btn">Continue →</div>
+        </div>
+      </div>
+
+      <!-- L7.2 S5 — CLOSING -->
+      <div class="screen-card">
+        <div class="phone-chrome"><div class="chrome-bar"><div class="chrome-back">‹</div><div class="chrome-progress"><div class="chrome-progress-fill" style="width:100%"></div></div><div class="chrome-close">×</div></div></div>
+        <div class="screen-content">
+          <div class="screen-number">L7.2 · 5 of 5</div>
+          <span class="screen-type-tag tag-info">Info</span>
+          <div class="heading-block">
+            <div class="screen-heading">Services and Products: the two "you build something, someone pays for it" shapes</div>
+          </div>
+          <div class="screen-body">Neither is better. They're answers to different questions about what kind of risk you can absorb and what kind of feedback you need. Services rewards the operator who needs cash flow now. Products rewards the builder who can keep producing while seeing nothing in return, betting that one will hit.
+
+Which one feels more like you isn't a choice you make today. It's a thing you'll notice as you do the work.</div>
+          <div class="continue-btn">Continue →</div>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /L7.2 -->
+
+  <!-- LESSON 7.3 -->
+  <div class="lesson">
+    <div class="lesson-header">
+      <span class="lesson-number">Lesson 7.3</span>
+      <span class="lesson-title">Content & Force Multiplier</span>
+      <span class="lesson-meta">6 screens</span>
+    </div>
+    <div class="screens-grid">
+
+      <!-- L7.3 S1 — VIDEO SCRIPT -->
+      <div class="screen-card">
+        <div class="phone-chrome"><div class="chrome-bar"><div class="chrome-back">‹</div><div class="chrome-progress"><div class="chrome-progress-fill" style="width:17%"></div></div><div class="chrome-close">×</div></div></div>
+        <div class="screen-content">
+          <div class="screen-number">L7.3 · 1 of 6</div>
+          <span class="screen-type-tag tag-info">Video Script</span>
+          <div class="heading-block">
+            <div class="screen-heading">The two business shapes work because someone gives you money for something you produce. The next two paths work differently. In Content and the Force Multiplier, you're not selling output — you're building an asset. The income arrives later, when the asset is big enough to pay you back.</div>
+          </div>
+          <div class="screen-body">What's changed in 2026 is the labor cost. AI now writes scripts, generates B-roll, edits clips, produces voiceovers, and writes blog posts indistinguishable from human work. Whole categories of content are now produceable by a single person with a laptop.</div>
+          <div class="continue-btn">Continue →</div>
+        </div>
+      </div>
+
+      <!-- L7.3 S2 — INFO: AI Content — Building an Audience Asset -->
+      <div class="screen-card">
+        <div class="phone-chrome"><div class="chrome-bar"><div class="chrome-back">‹</div><div class="chrome-progress"><div class="chrome-progress-fill" style="width:34%"></div></div><div class="chrome-close">×</div></div></div>
+        <div class="screen-content">
+          <div class="screen-number">L7.3 · 2 of 6</div>
+          <span class="screen-type-tag tag-info">Info</span>
+          <div class="heading-block">
+            <div class="screen-heading">AI Content — building an audience asset</div>
+          </div>
+          <div class="screen-body">In the Content shape, you make stuff people watch, read, or listen to — and you get paid by the people who pay to reach those audiences. Ads. Affiliate links. Eventually your own products sold to a list that already trusts you.
+
+The faceless YouTube channel captures this best. No person on screen — just B-roll, narration, AI-generated voiceovers. Some of these channels make $50,000 to $70,000 a month from YouTube ads alone, on top of affiliate income. It's common to watch for months before realizing the hosts don't exist.
+
+<strong>Faceless content and the AI-search shift:</strong> A growing share of people ask ChatGPT, Claude, or Perplexity instead of Google. The AI recommends specific products, blogs, and sources. Optimizing your content for AI engines is a new layer on top of traditional SEO; some call it generative engine optimization, or GEO.
+
+The trade-off in Content is the one it's always had: <strong>long fuse, large ceiling.</strong> First dollar is six months out, often longer. When it lands, it lands hard. The math works only for people who can publish without immediate feedback for six to twelve months without giving up.</div>
+          <div class="continue-btn">Continue →</div>
+        </div>
+      </div>
+
+      <!-- L7.3 S3 — INFO: Force Multiplier — Nobody Pitches It -->
+      <div class="screen-card">
+        <div class="phone-chrome"><div class="chrome-bar"><div class="chrome-back">‹</div><div class="chrome-progress"><div class="chrome-progress-fill" style="width:50%"></div></div><div class="chrome-close">×</div></div></div>
+        <div class="screen-content">
+          <div class="screen-number">L7.3 · 3 of 6</div>
+          <span class="screen-type-tag tag-info">Info</span>
+          <div class="heading-block">
+            <div class="screen-heading">Force Multiplier — the path almost no one teaches</div>
+          </div>
+          <div class="screen-body">Every team has a person who quietly makes everything possible. Their reports are sharper. Their decks are faster. Their work is two weeks ahead of the next person's. Their managers notice. Their salary follows.
+
+In 2026, that person is increasingly the one who's mastered AI.
+
+You don't need a new business to capture this. You don't need an audience. You don't need clients. You just need to use AI to multiply what you're already doing in the role you already have. Your reports get sharper because Claude is reviewing them. Your emails get faster because you're using voice input plus an RCCF prompt template. Your strategic thinking gets denser because you've turned a Project into a persistent thought partner.</div>
+          <div class="continue-btn">Continue →</div>
+        </div>
+      </div>
+
+      <!-- L7.3 S4 — INFO: Why Nobody Sells It -->
+      <div class="screen-card">
+        <div class="phone-chrome"><div class="chrome-bar"><div class="chrome-back">‹</div><div class="chrome-progress"><div class="chrome-progress-fill" style="width:67%"></div></div><div class="chrome-close">×</div></div></div>
+        <div class="screen-content">
+          <div class="screen-number">L7.3 · 4 of 6</div>
+          <span class="screen-type-tag tag-info">Info</span>
+          <div class="heading-block">
+            <div class="screen-heading">There's no $497 course called "Be the most useful person on your team"</div>
+          </div>
+          <div class="screen-body">The reason is simple: the path doesn't need a course. The moves are the ones you've already learned in this Challenge. The teacher you need isn't someone selling you a system — it's the application of what you already know to the work you already do. Nothing to sell.
+
+That's why this path stays invisible to everyone selling AI courses. It's also why it's quietly the path that fits more users than any other.
+
+<strong>The exponential math of role-leverage:</strong> Most teams have a normal distribution of output. AI is now compressing the time-to-output for people who use it well. The output gap between a strong AI user and a non-user inside the same role grows every quarter. Your manager doesn't grade your absolute output — they grade your relative output. Your salary follows your relative position. As your output rises, the relative output of the people around you falls. Even if they're working as hard as before.
+
+That's the wedge no course pays the writer to recommend. The Force Multiplier is the lowest-risk path on the map. It's also, statistically, the path most professionals will quietly end up taking.</div>
+          <div class="continue-btn">Continue →</div>
+        </div>
+      </div>
+
+      <!-- L7.3 S5 — KNOWLEDGE: Scenario Q3 -->
+      <div class="screen-card">
+        <div class="phone-chrome"><div class="chrome-bar"><div class="chrome-back">‹</div><div class="chrome-progress"><div class="chrome-progress-fill" style="width:84%"></div></div><div class="chrome-close">×</div></div></div>
+        <div class="screen-content">
+          <div class="screen-number">L7.3 · 5 of 6</div>
+          <span class="screen-type-tag tag-knowledge">Knowledge Check</span>
+          <div class="heading-block">
+            <div class="screen-heading">What's the accurate diagnosis?</div>
+            <div class="screen-subheading">Aisha: 6 months into AI Content path. 3 videos a week on faceless YouTube. 220 subscribers, $0 income. Thinking of switching to Services.</div>
+          </div>
+          <div class="mcq-tiles">
+            <div class="mcq-tile">
+              <div class="mcq-radio"></div>
+              <span><strong>A.</strong> Picked saturated niche — switch niches before switching paths</span>
+            </div>
+            <div class="mcq-tile">
+              <div class="mcq-radio"></div>
+              <span><strong>B.</strong> Following timeline correctly — 6–12 month fuse is normal; year two is when math turns</span>
+            </div>
+            <div class="mcq-tile">
+              <div class="mcq-radio"></div>
+              <span><strong>C.</strong> Layer paid ads on top — accelerate into income range faster</span>
+            </div>
+            <div class="mcq-tile">
+              <div class="mcq-radio"></div>
+              <span><strong>D.</strong> Pivot to short-form — TikTok/Reels compounds faster than YouTube</span>
+            </div>
+          </div>
+          <div class="explanation-block"><strong>Correct: B.</strong> Content's structural timeline is exactly what Aisha described. Switching paths now would be giving up before the math has had a chance to work. The lesson explicitly named six to twelve months as the fuse. When someone reports failure on a long-fuse path while still inside the fuse, the answer is almost always keep going, not switch paths.</div>
+          <div class="continue-btn">Continue →</div>
+        </div>
+      </div>
+
+      <!-- L7.3 S6 — CLOSING -->
+      <div class="screen-card">
+        <div class="phone-chrome"><div class="chrome-bar"><div class="chrome-back">‹</div><div class="chrome-progress"><div class="chrome-progress-fill" style="width:100%"></div></div><div class="chrome-close">×</div></div></div>
+        <div class="screen-content">
+          <div class="screen-number">L7.3 · 6 of 6</div>
+          <span class="screen-type-tag tag-info">Info</span>
+          <div class="heading-block">
+            <div class="screen-heading">Content and Force Multiplier: the two compounding paths</div>
+          </div>
+          <div class="screen-body">Content compounds an audience. The Force Multiplier compounds your role. Both take time. Both pay back in non-linear ways once the asset is big enough.
+
+Content costs you publishing reps. The risk is publishing for a year and finding no one cared. Force Multiplier costs you almost nothing — you're using the same hours you were going to spend at work anyway. The risk is the hardest one to see: it's the cost of not taking the path while the people next to you do.</div>
+          <div class="continue-btn">Continue →</div>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /L7.3 -->
+
+  <!-- LESSON 7.4 -->
+  <div class="lesson">
+    <div class="lesson-header">
+      <span class="lesson-number">Lesson 7.4</span>
+      <span class="lesson-title">How to Read Your Signal</span>
+      <span class="lesson-meta">4 screens</span>
+    </div>
+    <div class="screens-grid">
+
+      <!-- L7.4 S1 — VIDEO SCRIPT -->
+      <div class="screen-card">
+        <div class="phone-chrome"><div class="chrome-bar"><div class="chrome-back">‹</div><div class="chrome-progress"><div class="chrome-progress-fill" style="width:25%"></div></div><div class="chrome-close">×</div></div></div>
+        <div class="screen-content">
+          <div class="screen-number">L7.4 · 1 of 4</div>
+          <span class="screen-type-tag tag-info">Video Script</span>
+          <div class="heading-block">
+            <div class="screen-heading">You've seen the four shapes. You've heard their trade-offs. The temptation now is to pick. Don't. Not yet.</div>
+          </div>
+          <div class="screen-body">The Builder missions in front of you are designed to give you something you don't have yet: real evidence. You're going to produce work in some of these shapes. You'll feel what each kind of work feels like. You'll notice which output you were proud of and which output drained you. That's the data.
+
+The lesson here isn't a decision. It's a lens. Four questions you'll wear through the rest of the Challenge, ask yourself after every Builder mission, and let answer themselves over time. By the end of the Challenge — the questions will have done the work for you.</div>
+          <div class="continue-btn">Continue →</div>
+        </div>
+      </div>
+
+      <!-- L7.4 S2 — INFO: The Four Questions -->
+      <div class="screen-card">
+        <div class="phone-chrome"><div class="chrome-bar"><div class="chrome-back">‹</div><div class="chrome-progress"><div class="chrome-progress-fill" style="width:50%"></div></div><div class="chrome-close">×</div></div></div>
+        <div class="screen-content">
+          <div class="screen-number">L7.4 · 2 of 4</div>
+          <span class="screen-type-tag tag-info">Info</span>
+          <div class="heading-block">
+            <div class="screen-heading">The four questions</div>
+          </div>
+          <div class="screen-body"><strong>Question 1 — Energy:</strong> After doing the work, did it pull you forward, or did you have to push through? This is the most important question and the most ignored. Aptitude can be trained. Reality can be planned around. Energy can't be faked. The longer the path runs, the more energy you need to keep showing up.
+
+<strong>Question 2 — Aptitude:</strong> Was the output actually good? AI levels the floor on most skills. What it doesn't level is taste, judgment, and instinct. Pay attention to the gap between what came easily for you and what was a slog.
+
+<strong>Question 3 — Reality:</strong> Does the life this path implies actually fit the life you have? Services means clients calling, waiting, pushing. Products means solo work for months without external feedback. Content means publishing on a cadence. Force Multiplier means the same job you have now, with sharper tools.
+
+<strong>Question 4 — Leverage:</strong> What do you already have that gives one path a head start? Industry network. Domain expertise. An existing audience. A current role with room for growth.</div>
+          <div class="continue-btn">Continue →</div>
+        </div>
+      </div>
+
+      <!-- L7.4 S3 — KNOWLEDGE: Scenario Q5 -->
+      <div class="screen-card">
+        <div class="phone-chrome"><div class="chrome-bar"><div class="chrome-back">‹</div><div class="chrome-progress"><div class="chrome-progress-fill" style="width:75%"></div></div><div class="chrome-close">×</div></div></div>
+        <div class="screen-content">
+          <div class="screen-number">L7.4 · 3 of 4</div>
+          <span class="screen-type-tag tag-knowledge">Knowledge Check</span>
+          <div class="heading-block">
+            <div class="screen-heading">Which question delivers the most decisive signal for Mateo?</div>
+            <div class="screen-subheading">Mateo: finance manager, 38, stable role, full calendar, 4-month-old child. Excellent outputs across all four paths.</div>
+          </div>
+          <div class="mcq-tiles">
+            <div class="mcq-tile">
+              <div class="mcq-radio"></div>
+              <span><strong>A.</strong> Energy — to figure which pulled him forward most strongly</span>
+            </div>
+            <div class="mcq-tile">
+              <div class="mcq-radio"></div>
+              <span><strong>B.</strong> Aptitude — high across all four, so highest ceiling wins</span>
+            </div>
+            <div class="mcq-tile">
+              <div class="mcq-radio"></div>
+              <span><strong>C.</strong> Reality — full role, infant, full calendar knocks out three paths on Reality alone</span>
+            </div>
+            <div class="mcq-tile">
+              <div class="mcq-radio"></div>
+              <span><strong>D.</strong> Leverage — finance background gives domain-specific head start</span>
+            </div>
+          </div>
+          <div class="explanation-block"><strong>Correct: C.</strong> Mateo's life — senior role, newborn, full calendar — knocks out three of four paths on Reality alone. Services adds clients to a full calendar. Products requires sustained solo work outside business hours. Content requires publishing cadence that doesn't pause. Only Force Multiplier doesn't add new calendar load. When Reality knocks out most paths, Reality is the deciding signal — full stop.</div>
+          <div class="continue-btn">Continue →</div>
+        </div>
+      </div>
+
+      <!-- L7.4 S4 — CLOSING: Mission Complete -->
+      <div class="screen-card">
+        <div class="phone-chrome"><div class="chrome-bar"><div class="chrome-back">‹</div><div class="chrome-progress"><div class="chrome-progress-fill" style="width:100%"></div></div><div class="chrome-close">×</div></div></div>
+        <div class="screen-content">
+          <div class="screen-number">L7.4 · 4 of 4</div>
+          <span class="screen-type-tag tag-info">Info</span>
+          <div class="heading-block">
+            <div class="screen-heading">Mission complete</div>
+          </div>
+          <div class="screen-body">You've seen the four real shapes income takes with AI, and you have the four questions you'll wear through everything that comes next. Most people pick a path because someone sold it to them; you'll pick because the work showed you.
+
+The path that's right for you is usually the one where Energy and Reality both lean toward yes — and where you have at least one form of Leverage that gives the work a head start. Energy and Reality usually win. If a path drains you, no amount of Leverage will save it. If a path doesn't fit your life, no amount of Aptitude will keep you in it. Aptitude and Leverage are tiebreakers.
+
+Save the Decision Card. Bring it with you through the rest of the Challenge. After every Builder mission, take three minutes and run yourself through the four questions for the path that mission worked in. Note where the signal pointed. Don't decide. Just note.
+
+By the end of the Challenge, the card will have answered itself. Next missions: real Builder work — where the evidence shows up.</div>
+          <div class="continue-btn">Continue →</div>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /L7.4 -->
+
+</div><!-- /container -->
+
+</body></html>
