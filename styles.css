@@ -290,3 +290,25 @@ body {
 }
 .parse-summary ul { margin: var(--space-8) 0 0; padding-left: var(--space-20); }
 .parse-summary li { margin-bottom: var(--space-4); }
+
+#send-btn {
+  display: block;
+  margin: var(--space-32) auto 0;
+  min-width: 240px;
+}
+.send-icon {
+  display: inline-block;
+  margin-right: var(--space-8);
+  font-size: 18px;
+}
+.send-spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  margin-left: var(--space-8);
+  border: 2px solid rgba(255,255,255,0.5);
+  border-top-color: var(--text-inverse);
+  border-radius: 50%;
+  animation: spin 700ms linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }

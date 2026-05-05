@@ -1,5 +1,6 @@
 import { getToken, setToken, clearToken } from './state.js';
 import { parseFile, applyMarker, validateLengths } from './parser.js';
+import { uploadAll } from './strapi.js';
 
 const modal = document.getElementById('token-modal');
 const input = document.getElementById('token-input');
@@ -48,6 +49,16 @@ const markerInput = document.getElementById('marker');
 
 let parsedLessons = null;
 
+const sendBtn = document.getElementById('send-btn');
+const sendLabel = document.getElementById('send-label');
+const sendIcon = document.getElementById('send-icon');
+const sendSpinner = document.getElementById('send-spinner');
+
+function activateSend(active) {
+  sendBtn.disabled = !active;
+  sendBtn.classList.toggle('btn-primary--inactive', !active);
+}
+
 ['dragenter', 'dragover'].forEach(ev =>
   dropzone.addEventListener(ev, (e) => {
     e.preventDefault();
@@ -83,6 +94,7 @@ async function handleFile(file) {
       summary.classList.add('parse-summary--error');
       summary.innerHTML = `<strong>Pre-check failed</strong><ul>${errors.map(e => `<li>${escapeHtml(e)}</li>`).join('')}</ul>`;
       parsedLessons = null;
+      activateSend(false);
       return;
     }
     parsedLessons = lessons;
@@ -97,6 +109,7 @@ async function handleFile(file) {
     summary.innerHTML = `<strong>Parse failed:</strong> ${escapeHtml(e.message)}`;
     parsedLessons = null;
   }
+  activateSend(!!parsedLessons);
 }
 
 function escapeHtml(s) {
@@ -106,3 +119,23 @@ function escapeHtml(s) {
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;');
 }
+
+sendBtn.addEventListener('click', async () => {
+  if (!parsedLessons) return;
+  // Loading state
+  sendBtn.disabled = true;
+  sendLabel.textContent = 'Magic…';
+  sendIcon.hidden = false;
+  sendSpinner.hidden = false;
+
+  const token = getToken();
+  const results = await uploadAll(parsedLessons, token);
+
+  // Result rendering happens in T13. For now, log + reset button.
+  console.log('Upload results:', results);
+
+  sendLabel.textContent = 'Send to Strapi';
+  sendIcon.hidden = true;
+  sendSpinner.hidden = true;
+  activateSend(false);
+});
