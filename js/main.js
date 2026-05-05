@@ -1,4 +1,5 @@
 import { getToken, setToken, clearToken } from './state.js';
+import { parseFile, applyMarker, validateLengths } from './parser.js';
 
 const modal = document.getElementById('token-modal');
 const input = document.getElementById('token-input');
@@ -42,6 +43,10 @@ if (!getToken()) showModal();
 
 const dropzone = document.getElementById('dropzone');
 const fileInput = document.getElementById('file-input');
+const summary = document.getElementById('parse-summary');
+const markerInput = document.getElementById('marker');
+
+let parsedLessons = null;
 
 ['dragenter', 'dragover'].forEach(ev =>
   dropzone.addEventListener(ev, (e) => {
@@ -64,8 +69,40 @@ fileInput.addEventListener('change', (e) => {
   if (file) handleFile(file);
 });
 
-function handleFile(file) {
-  // Stub — parser wires up in later tasks
-  console.log('handleFile:', file.name, file.size, file.type);
+async function handleFile(file) {
   dropzone.classList.add('dropzone--filled');
+  summary.hidden = false;
+  summary.classList.remove('parse-summary--error');
+  summary.innerHTML = `Reading <strong>${escapeHtml(file.name)}</strong>…`;
+  try {
+    let lessons = await parseFile(file);
+    const marker = markerInput.value.trim();
+    lessons = applyMarker(lessons, marker);
+    const errors = validateLengths(lessons);
+    if (errors.length) {
+      summary.classList.add('parse-summary--error');
+      summary.innerHTML = `<strong>Pre-check failed</strong><ul>${errors.map(e => `<li>${escapeHtml(e)}</li>`).join('')}</ul>`;
+      parsedLessons = null;
+      return;
+    }
+    parsedLessons = lessons;
+    const totalScreens = lessons.reduce((acc, l) => acc + (l.screens?.length || 0), 0);
+    summary.innerHTML = `
+      ✓ Distilled <strong>${lessons.length}</strong> lesson${lessons.length === 1 ? '' : 's'},
+      <strong>${totalScreens}</strong> screen${totalScreens === 1 ? '' : 's'} total<br>
+      ✓ Length pre-check: passed${marker ? `<br>✓ Marker: <code>${escapeHtml(marker)}</code>` : ''}
+    `;
+  } catch (e) {
+    summary.classList.add('parse-summary--error');
+    summary.innerHTML = `<strong>Parse failed:</strong> ${escapeHtml(e.message)}`;
+    parsedLessons = null;
+  }
+}
+
+function escapeHtml(s) {
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
 }
