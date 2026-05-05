@@ -91,3 +91,65 @@ body {
   margin: 0 auto;
   padding: var(--space-32) var(--space-24) var(--space-80);
 }
+
+.topbar {
+  background: var(--surface-default);
+  border-bottom: 1px solid var(--border-subtle);
+}
+.topbar__inner {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: var(--space-12) var(--space-24);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-16);
+}
+.topbar__title {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.005em;
+  color: var(--text-primary);
+}
+.topbar__controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-16);
+}
+
+.marker-field {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-8);
+}
+.marker-field__label {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  color: var(--text-tertiary);
+}
+.marker-field__input {
+  font-family: var(--font-ui);
+  font-size: 14px;
+  padding: 6px 10px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-field);
+  background: var(--surface-default);
+  color: var(--text-body);
+  width: 160px;
+}
+.marker-field__input:focus {
+  outline: 2px solid var(--surface-brand);
+  outline-offset: 1px;
+}
+
+.ghost-link {
+  background: none;
+  border: none;
+  padding: 6px 8px;
+  font-family: var(--font-ui);
+  font-size: 14px;
+  color: var(--text-tertiary);
+  cursor: pointer;
+}
+.ghost-link:hover { color: var(--text-primary); }
