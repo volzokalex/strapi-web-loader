@@ -153,3 +153,83 @@ body {
   cursor: pointer;
 }
 .ghost-link:hover { color: var(--text-primary); }
+
+.modal[hidden] { display: none; }
+.modal {
+  position: fixed; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  z-index: 1000;
+}
+.modal__backdrop {
+  position: absolute; inset: 0;
+  background: rgba(31,27,23,0.45);
+}
+.modal__panel {
+  position: relative;
+  background: var(--surface-default);
+  border-radius: var(--radius-interactive);
+  box-shadow: var(--shadow-elev-lg);
+  padding: var(--space-32);
+  max-width: 480px;
+  width: calc(100% - 48px);
+}
+.modal__title {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0 0 var(--space-12);
+}
+.modal__body {
+  margin: 0 0 var(--space-20);
+  font-size: 14px;
+  color: var(--text-body);
+  line-height: 20px;
+}
+.modal__input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-field);
+  font-family: var(--font-ui);
+  font-size: 14px;
+  background: var(--surface-default);
+  color: var(--text-body);
+}
+.modal__input:focus { outline: 2px solid var(--surface-brand); outline-offset: 1px; }
+.modal__error {
+  margin: var(--space-8) 0 0;
+  font-size: 12px;
+  color: var(--text-error);
+}
+
+/* Primary button — used in modal save and main Send-to-Strapi button */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-8);
+  padding: 14px 24px;
+  margin-top: var(--space-20);
+  background: var(--surface-brand);
+  color: var(--text-inverse);
+  border: none;
+  border-radius: var(--radius-interactive);
+  font-family: var(--font-ui);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  box-shadow: var(--shadow-stack-cta);
+  transition: transform 90ms ease, box-shadow 90ms ease;
+}
+.btn-primary:active {
+  transform: translateY(4px);
+  box-shadow: var(--shadow-stack-cta-pressed);
+}
+.btn-primary:disabled {
+  background: var(--surface-muted);
+  color: var(--text-tertiary);
+  box-shadow: none;
+  cursor: not-allowed;
+  transform: none;
+}

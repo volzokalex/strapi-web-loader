@@ -26,5 +26,18 @@
   <main class="page">
     <!-- drop zone, parse summary, send button, result panel — added in later tasks -->
   </main>
+
+<div id="token-modal" class="modal" hidden>
+  <div class="modal__backdrop"></div>
+  <div class="modal__panel" role="dialog" aria-labelledby="token-modal-title">
+    <h2 id="token-modal-title" class="modal__title">Strapi API token</h2>
+    <p class="modal__body">Paste your Strapi API token. It will be stored in your browser only — never sent anywhere except Strapi itself.</p>
+    <input type="password" id="token-input" class="modal__input" autocomplete="off" placeholder="paste token here" />
+    <p class="modal__error" id="token-error" hidden>Please paste a token.</p>
+    <button type="button" id="token-save" class="btn-primary">Save</button>
+  </div>
+</div>
+
+<script type="module" src="js/main.js"></script>
 </body>
 </html>
