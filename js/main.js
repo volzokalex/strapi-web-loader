@@ -1,6 +1,7 @@
 import { getToken, setToken, clearToken } from './state.js';
 import { parseFile, applyMarker, validateLengths } from './parser.js';
 import { uploadAll } from './strapi.js';
+import { renderResult } from './ui.js';
 
 const modal = document.getElementById('token-modal');
 const input = document.getElementById('token-input');
@@ -131,11 +132,27 @@ sendBtn.addEventListener('click', async () => {
   const token = getToken();
   const results = await uploadAll(parsedLessons, token);
 
-  // Result rendering happens in T13. For now, log + reset button.
-  console.log('Upload results:', results);
+  // Hide drop UI, show result panel
+  const result = document.getElementById('result-panel');
+  dropzone.hidden = true;
+  summary.hidden = true;
+  sendBtn.hidden = true;
+  result.hidden = false;
+  renderResult(results, result);
 
-  sendLabel.textContent = 'Send to Strapi';
-  sendIcon.hidden = true;
-  sendSpinner.hidden = true;
-  activateSend(false);
+  // Wire "Upload another" button (added by renderResult)
+  document.getElementById('upload-another').addEventListener('click', () => {
+    parsedLessons = null;
+    fileInput.value = '';
+    dropzone.classList.remove('dropzone--filled');
+    summary.innerHTML = '';
+    summary.hidden = true;
+    result.hidden = true;
+    dropzone.hidden = false;
+    sendBtn.hidden = false;
+    sendLabel.textContent = 'Send to Strapi';
+    sendIcon.hidden = true;
+    sendSpinner.hidden = true;
+    activateSend(false);
+  });
 });

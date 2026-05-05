@@ -312,3 +312,31 @@ body {
   animation: spin 700ms linear infinite;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
+
+.result-panel {
+  margin-top: var(--space-32);
+  padding: var(--space-28) var(--space-32);
+  background: var(--surface-default);
+  border-radius: var(--radius-interactive);
+  border: 1px solid var(--border-subtle);
+  font-family: var(--font-ui);
+  font-size: 15px;
+  line-height: 22px;
+  color: var(--text-body);
+}
+.result-panel__title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0 0 var(--space-16);
+}
+.result-panel__title--success { color: var(--text-primary); }
+.result-panel__title--partial { color: #B45309; }
+.result-panel__title--fail { color: var(--text-error); }
+.result-panel ol { padding-left: var(--space-20); margin: 0 0 var(--space-20); }
+.result-panel li { margin-bottom: var(--space-8); }
+.result-panel a { color: var(--text-link); }
+.result-panel__hint { color: var(--text-secondary); font-size: 14px; }
+.result-panel__again {
+  margin-top: var(--space-24);
+}
