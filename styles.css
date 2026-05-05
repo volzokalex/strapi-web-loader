@@ -1,0 +1,93 @@
+/* Squills DS v1 — hand-translated tokens for browser tool.
+   Source of truth: ai-company-skills/knowledge/design-system.md §2.
+   Resolved values match the published Figma DS file XyEzG7Ym7CuodjLSMv4XIM. */
+
+:root {
+  /* Surface */
+  --surface-canvas: #FAF6F0;        /* warm white page canvas */
+  --surface-default: #FFFFFF;       /* white tactile button + field bg */
+  --surface-subtle: #F4EEE5;        /* muted elevated surface for cards */
+  --surface-muted: #ECE5DA;         /* quieter neutral */
+  --surface-brand: #E85D04;         /* orange brand fill */
+  --surface-inverse: #1F1B17;       /* dark surface (rare) */
+
+  /* Text */
+  --text-primary: #1F1B17;          /* jet on warm canvas */
+  --text-body: #2A2520;
+  --text-secondary: #5C544A;
+  --text-tertiary: rgba(31,27,23,0.40); /* 26-40% warm */
+  --text-inverse: #FFF6E9;          /* ivory label on orange */
+  --text-brand: #E85D04;
+  --text-link: #E85D04;
+  --text-error: #B82323;
+
+  /* Border */
+  --border-default: rgba(31,27,23,0.18);
+  --border-subtle: rgba(31,27,23,0.08);
+  --border-strong: rgba(31,27,23,0.32);
+  --border-brand: #E85D04;
+  --border-error: #B82323;
+
+  /* Background (status) */
+  --bg-error: #FCE9E9;
+
+  /* Radius */
+  --radius-none: 0;
+  --radius-field: 8px;
+  --radius-interactive: 12px;
+  --radius-pill: 999px;
+
+  /* Spacing */
+  --space-2: 2px;
+  --space-4: 4px;
+  --space-8: 8px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-20: 20px;
+  --space-24: 24px;
+  --space-28: 28px;
+  --space-32: 32px;
+  --space-40: 40px;
+  --space-44: 44px;
+  --space-52: 52px;
+  --space-80: 80px;
+
+  /* Shadow — Stack/CTA: 6px slab + warm bloom inset */
+  --shadow-stack-cta:
+    0 6px 0 #C04D03,
+    inset 0 1px 0 rgba(255,200,140,0.45);
+  --shadow-stack-cta-pressed:
+    0 1px 0 #C04D03,
+    inset 0 1px 0 rgba(255,200,140,0.30);
+  --shadow-stack-neutral:
+    0 4px 0 rgba(31,27,23,0.18),
+    inset 0 1px 0 rgba(255,255,255,0.6);
+
+  /* Elevation */
+  --shadow-elev-md: 0 4px 16px rgba(31,27,23,0.10);
+  --shadow-elev-lg: 0 12px 32px rgba(31,27,23,0.18);
+
+  /* Type */
+  --font-display: 'Manrope', system-ui, sans-serif;
+  --font-ui: 'Inter', system-ui, sans-serif;
+}
+
+/* Reset / base */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: var(--font-ui);
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--text-primary);
+  background: var(--surface-canvas);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+/* Page shell — centered single column */
+.page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: var(--space-32) var(--space-24) var(--space-80);
+}
