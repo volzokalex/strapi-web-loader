@@ -181,6 +181,34 @@ test('parseHtml · throws on no lesson blocks', () => {
   assertTrue(threw, 'expected throw on no .lesson blocks');
 });
 
+import { applyMarker, validateLengths } from '../js/parser.js';
+
+test('applyMarker · adds suffix to title and slug', () => {
+  const lessons = [{ title: 'Foo', slug: 'foo', screens: [] }];
+  const out = applyMarker(lessons, 'volzok-test');
+  assertEqual(out[0].title, 'Foo — volzok-test');
+  assertEqual(out[0].slug, 'foo-volzok-test');
+});
+
+test('applyMarker · empty marker is no-op', () => {
+  const lessons = [{ title: 'Foo', slug: 'foo', screens: [] }];
+  const out = applyMarker(lessons, '');
+  assertEqual(out[0].title, 'Foo');
+});
+
+test('validateLengths · catches >255 heading', () => {
+  const longHeading = 'A'.repeat(300);
+  const lessons = [{ title: 'X', slug: 'x', screens: [{ __component: 'screens.information', heading: longHeading }] }];
+  const errs = validateLengths(lessons);
+  assertEqual(errs.length, 1);
+  assertTrue(errs[0].includes('300 chars'));
+});
+
+test('validateLengths · returns empty when all under limit', () => {
+  const lessons = [{ title: 'X', slug: 'x', screens: [{ __component: 'screens.information', heading: 'short' }] }];
+  assertEqual(validateLengths(lessons), []);
+});
+
 test('runner self-test', () => {
   assertEqual(1 + 1, 2);
 });
