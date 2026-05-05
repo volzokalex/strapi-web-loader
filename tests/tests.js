@@ -113,6 +113,74 @@ test('parseMd · multi-lesson', () => {
   assertEqual(lessons[1].title, 'Second Lesson');
 });
 
+import { parseHtml } from '../js/parsers/html.js';
+
+const SAMPLE_HTML = `
+<div class="lesson">
+  <div class="lesson-header">
+    <span class="lesson-title">Test HTML Lesson</span>
+  </div>
+  <div class="screens-grid">
+    <div class="screen-card">
+      <div class="screen-content">
+        <span class="screen-type-tag tag-info">Info</span>
+        <div class="heading-block"><div class="screen-heading">Hello HTML</div></div>
+        <div class="screen-body"><p>HTML body text.</p></div>
+      </div>
+    </div>
+    <div class="screen-card">
+      <div class="screen-content">
+        <span class="screen-type-tag tag-knowledge">Knowledge Check</span>
+        <div class="heading-block">
+          <div class="screen-heading">MCQ heading</div>
+          <div class="screen-subheading">Pick one</div>
+        </div>
+        <div class="mcq-tiles">
+          <div class="mcq-tile"><span>A. First</span></div>
+          <div class="mcq-tile"><span>B. Second</span></div>
+        </div>
+        <div class="explanation-block"><strong>Correct: B.</strong> Because reasons.</div>
+      </div>
+    </div>
+    <div class="screen-card">
+      <span class="screen-type-tag tag-congrats">Congratulation · system · LESSON COMPLETE</span>
+      <div class="congrats-card">
+        <div class="congrats-statement">You can complete the test.</div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+test('parseHtml · single lesson', () => {
+  const lessons = parseHtml(SAMPLE_HTML);
+  assertEqual(lessons.length, 1);
+  assertEqual(lessons[0].title, 'Test HTML Lesson');
+  assertEqual(lessons[0].slug, 'test-html-lesson');
+  assertEqual(lessons[0].capability_statement, 'You can complete the test.');
+});
+
+test('parseHtml · screens parsed with correct types', () => {
+  const lessons = parseHtml(SAMPLE_HTML);
+  assertEqual(lessons[0].screens.length, 2);
+  assertEqual(lessons[0].screens[0].__component, 'screens.information');
+  assertEqual(lessons[0].screens[1].__component, 'screens.practice-knowledge-mcq');
+});
+
+test('parseHtml · MCQ correct inferred from explanation', () => {
+  const lessons = parseHtml(SAMPLE_HTML);
+  const opts = lessons[0].screens[1].options;
+  assertEqual(opts[0].is_correct, false);
+  assertEqual(opts[1].is_correct, true);
+});
+
+test('parseHtml · throws on no lesson blocks', () => {
+  let threw = false;
+  try { parseHtml('<html><body><p>nothing here</p></body></html>'); }
+  catch (e) { threw = true; }
+  assertTrue(threw, 'expected throw on no .lesson blocks');
+});
+
 test('runner self-test', () => {
   assertEqual(1 + 1, 2);
 });
