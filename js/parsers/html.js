@@ -13,11 +13,11 @@ const SCREEN_TAG_TO_TYPE = {
   'robot': 'information',
   'info': 'information',
   'opinion': 'practice-opinion',
-  'knowledge': 'knowledge-mcq',           // bare "Knowledge" → MCQ
-  'knowledge check': 'knowledge-mcq',
+  'knowledge · true/false': 'knowledge-tf',
   'knowledge · case study': 'knowledge-mcq',
   'knowledge · mcq': 'knowledge-mcq',
-  'knowledge · true/false': 'knowledge-tf',
+  'knowledge check': 'knowledge-mcq',
+  'knowledge': 'knowledge-mcq',
   'true / false': 'knowledge-tf',
   'ai box': 'ai-box',
 };
