@@ -24,7 +24,14 @@
   </header>
 
   <main class="page">
-    <!-- drop zone, parse summary, send button, result panel — added in later tasks -->
+    <div id="dropzone" class="dropzone">
+      <input type="file" id="file-input" class="dropzone__input" accept=".md,.txt,.html,.pdf" hidden />
+      <label for="file-input" class="dropzone__label">
+        <span class="dropzone__icon">⬇</span>
+        <span class="dropzone__primary">Drop file or click to browse</span>
+        <span class="dropzone__secondary">.md · .txt · .html · .pdf</span>
+      </label>
+    </div>
   </main>
 
 <div id="token-modal" class="modal" hidden>

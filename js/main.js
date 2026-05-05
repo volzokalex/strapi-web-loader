@@ -39,3 +39,33 @@ resetBtn.addEventListener('click', () => {
 
 // On load, if no token, prompt
 if (!getToken()) showModal();
+
+const dropzone = document.getElementById('dropzone');
+const fileInput = document.getElementById('file-input');
+
+['dragenter', 'dragover'].forEach(ev =>
+  dropzone.addEventListener(ev, (e) => {
+    e.preventDefault();
+    dropzone.classList.add('dropzone--hover');
+  })
+);
+['dragleave', 'drop'].forEach(ev =>
+  dropzone.addEventListener(ev, () => dropzone.classList.remove('dropzone--hover'))
+);
+
+dropzone.addEventListener('drop', (e) => {
+  e.preventDefault();
+  const file = e.dataTransfer.files[0];
+  if (file) handleFile(file);
+});
+
+fileInput.addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (file) handleFile(file);
+});
+
+function handleFile(file) {
+  // Stub — parser wires up in later tasks
+  console.log('handleFile:', file.name, file.size, file.type);
+  dropzone.classList.add('dropzone--filled');
+}
